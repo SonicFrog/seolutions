@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User as DjangoUser
+from django.contrib.auth.models import User
 
 
 class Keyword(models.Model):
@@ -9,14 +9,6 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.keyword
-
-
-class User(DjangoUser):
-    pass
-
-
-class Admin(models.Model):
-    pass
 
 
 class Site(models.Model):
