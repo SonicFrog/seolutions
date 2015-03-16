@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'header.html' %}
+        <title>Site list</title>
+    </head>
+    <body>
+        <div id="site-list">
+            {% if site_list %}
+            <h1>List of sites:</h1>
+            <ul>
+                {% for site in site_list %}
+                <li>
+                    <a href="{% url 'site-view' site.id %}">
+                        {{ site.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>
+                No sites are available in config
+            </p>
+            {% endif %}
+        </div>
+    </body>
+</html>
