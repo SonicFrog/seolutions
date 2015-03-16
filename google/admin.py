@@ -50,5 +50,3 @@ class ReportAdmin(admin.ModelAdmin):
 admin.site.register(Site, SiteAdmin)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(Keyword, KeywordAdmin)
-admin.site.register(KeywordRelation, KeywordRelAdmin)
-admin.site.register(Responsibility, ResponbilityAdmin)
