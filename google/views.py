@@ -1,8 +1,27 @@
 from django.views import generic
 from django.http import Http404
 
-from google.models import Report
+from google.models import Report, Site
 from users.views import LoginRequiredMixin
+
+
+class SiteIndexView(generic.ListView, LoginRequiredMixin):
+    template_name = 'sites/list.html'
+    context_object_name = 'site_list'
+
+    def get_queryset(self):
+        return Site.objects.order_by('name')
+
+
+class SiteDetailView(generic.DetailView, LoginRequiredMixin):
+    template_name = 'sites/detail.html'
+    model = Site
+
+    def get_context_data(self, **kwargs):
+        context = super(SiteDetailView, self).get_context_data(**kwargs)
+        context['report_list'] = Report.objects.filter(
+            site=kwargs['object'].pk).order_by('date').reverse()
+        return context
 
 
 class ReportIndexView(generic.ListView, LoginRequiredMixin):
