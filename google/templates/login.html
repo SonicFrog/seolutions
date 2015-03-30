@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Login...</title>
-        {% include 'header.html' %}
-    </head>
-    <body>
-        <p class="login-welcome">
-            Welcome to Seolutions
-        </p>
-        <form action="{% url 'login-check' %}" method="POST" class="login-form">
-            {% csrf_token  %}
-            <input type=hidden name="redirect" value="{{ redirection }}" />
-            <table class="login-table">
-                {{ form }}
-            </table>
-            <input type="submit" value="Login" />
-        </form>
-    </body>
-</html>
+{% extends "root.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<p class="login-welcome">
+    Welcome to Seolutions
+</p>
+<form action="{% url 'login-check' %}" method="POST" class="login-form">
+    {% csrf_token  %}
+    <input type=hidden name="redirect" value="{{ redirection }}" />
+    <table class="login-table">
+        {{ form }}
+    </table>
+    <input type="submit" value="Login" />
+</form>
+{% endblock %}

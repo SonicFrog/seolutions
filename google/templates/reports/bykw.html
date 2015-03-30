@@ -1,0 +1,18 @@
+{% extends "root.html" %}
+
+{% block title %}Keywords{% endblock %}
+
+{% block content %}
+<h1>Keywords:</h1>
+<p>
+    {% if keyword_list %}
+    <ul>
+        {% for keyword in keyword_list %}
+        <li>{{ keyword }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    No keywords are configured right now!
+    {% endif %}
+</p>
+{% endblock %}

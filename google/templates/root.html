@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Seolutions{% endblock %}</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        {% block sidebar %}
+        <div id="sidebar">
+        </div>
+        {% endblock %}
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

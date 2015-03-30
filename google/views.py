@@ -1,7 +1,7 @@
 from django.views import generic
 from django.http import Http404
 
-from google.models import Report, Site
+from google.models import Report, Site, KeywordRelation, Keyword
 from users.views import LoginRequiredMixin
 
 
@@ -58,8 +58,20 @@ class ReportDeleteView(generic.DeleteView, LoginRequiredMixin):
 
 
 class ReportCompareView(generic.View, LoginRequiredMixin):
-    pass
+    template_name = 'reports/compare.html'
+
+    def get_context_data(self, **kwargs):
+        pass
 
 
 class ReportCreateView(generic.TemplateView, LoginRequiredMixin):
     template_name = "reports/create.html"
+
+
+class KeywordIndexView(generic.ListView, LoginRequiredMixin):
+    template_name = 'reports/bykw.html'
+    model = Keyword
+    context_object_name = 'keyword_list'
+
+    def get_queryset(self, **kwargs):
+        return Keyword.objects.all().order_by('keyword')

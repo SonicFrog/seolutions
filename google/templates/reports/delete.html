@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Delete report?</title>
-    </head>
-    <body>
-        <p>
-            <span class="delete-warning">Are you sure you want to delete this
-                report?</span>
-            <form method="POST">
-                {% csrf_token %}
-                <input type="button" value="Delete" action="submit" />
-            </form>
-        </p>
-    </body>
-</html>
+{% extends "root.html" %}
+{% block title %}Delete report?{% endblock %}
+
+{% block content %}
+<p>
+    <span class="delete-warning">Are you sure you want to delete this
+        report?</span>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="button" value="Delete" action="submit" />
+    </form>
+</p>
+{% endblock %}

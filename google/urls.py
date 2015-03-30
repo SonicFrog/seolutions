@@ -23,4 +23,8 @@ urlpatterns = patterns('',
                        url(r'^bysite/(?P<pk>\d+)$',
                            views.SiteDetailView.as_view(),
                            name='site-view'),
+
+                       url(r'^bykw/$',
+                           views.KeywordIndexView.as_view(),
+                           name='keyword-index'),
 )

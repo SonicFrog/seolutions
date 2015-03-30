@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% include 'header.html' %}
-        <title>Site list</title>
-    </head>
-    <body>
+{% extends "root.html" %}
+{% block title %}Site list{% endblock %}
+
+{% block content %}
         <div id="site-list">
             {% if site_list %}
             <h1>List of sites:</h1>
@@ -23,5 +20,4 @@
             </p>
             {% endif %}
         </div>
-    </body>
-</html>
+{% endblock %}

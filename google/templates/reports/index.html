@@ -1,21 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>View reports</title>
-    </head>
-    <body>
-        {% if latest_report_list %}
-        <ul>
-            {% for report in latest_report_list %}
-            <li><a href="{% url 'report-detail' report.id %}">
-                Ranking for {{ report.site }} related to {{ report.keyword }}
-            </a></li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>
-            No reports for this period!
-        </p>
-        {% endif %}
-    </body>
-</html>
+{% extends "root.html" %}
+
+{% block sidebar %}
+<a href="{% url 'site-index' %}">Filter by site</a>
+-
+<a href="{% url 'keyword-index' %}">Filter by keyword</a>
+{% endblock %}
+
+{% block content %}
+<h1>Latest reports for every site</h1>
+{% if latest_report_list %}
+<ul>
+    {% for report in latest_report_list %}
+    <li><a href="{% url 'report-detail' report.id %}">
+        Ranking for {{ report.site }} related to {{ report.keyword }}
+    </a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>
+    No reports for this period!
+</p>
+{% endif %}
+{% endblock %}
