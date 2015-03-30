@@ -14,10 +14,8 @@ class Keyword(models.Model):
 class Site(models.Model):
     name = models.CharField(max_length=200)
     url = models.CharField(max_length=1000)
-    admins = models.ManyToManyField(User, through='Responsibility',
-                                    through_fields=('site', 'person'))
-    keywords = models.ManyToManyField(Keyword, through='KeywordRelation',
-                                      through_fields=('site', 'keyword'))
+    admins = models.ManyToManyField(User)
+    keywords = models.ManyToManyField(Keyword)
 
     def __str__(self):
         return self.name

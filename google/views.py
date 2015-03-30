@@ -1,19 +1,31 @@
 from django.views import generic
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 
-from google.models import Report, Site, KeywordRelation, Keyword
-from users.views import LoginRequiredMixin
+from google.models import Report, Site, Keyword
 
 
-class SiteIndexView(generic.ListView, LoginRequiredMixin):
+class LoggedInMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            raise Http404
+        return super(LoggedInMixin, self).dispatch(request, *args, **kwargs)
+
+
+class SiteIndexView(generic.ListView, LoggedInMixin):
     template_name = 'sites/list.html'
     context_object_name = 'site_list'
 
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseForbidden()
+        return super(SiteIndexView, self).get(request, *args, **kwargs)
+
     def get_queryset(self):
-        return Site.objects.order_by('name')
+        q = Site.objects.filter(admins=self.request.user)
+        return q
 
 
-class SiteDetailView(generic.DetailView, LoginRequiredMixin):
+class SiteDetailView(generic.DetailView, LoggedInMixin):
     template_name = 'sites/detail.html'
     model = Site
 
@@ -24,21 +36,25 @@ class SiteDetailView(generic.DetailView, LoginRequiredMixin):
         return context
 
 
-class ReportIndexView(generic.ListView, LoginRequiredMixin):
+class ReportIndexView(generic.ListView, LoggedInMixin):
     template_name = 'reports/index.html'
     context_object_name = 'latest_report_list'
 
     def get_queryset(self):
-        return Report.objects.order_by('date')[:5]
+        r = Report.objects.filter(site__admins=self.request.user)
+        return r.order_by('date')[:5]
 
 
-class ReportDetailView(generic.DetailView, LoginRequiredMixin):
+class ReportDetailView(generic.DetailView, LoggedInMixin):
     model = Report
     context_object_name = 'report'
     template_name = 'reports/detail.html'
 
+    def get_queryset(self):
+        return Report.objects.filter(site__admins=self.request.user)
 
-class ReportDeleteView(generic.DeleteView, LoginRequiredMixin):
+
+class ReportDeleteView(generic.DeleteView, LoggedInMixin):
     template_name = 'reports/delete.html'
     context_object_name = 'report'
     model = Report
@@ -57,18 +73,18 @@ class ReportDeleteView(generic.DeleteView, LoginRequiredMixin):
             return obj
 
 
-class ReportCompareView(generic.View, LoginRequiredMixin):
+class ReportCompareView(generic.View, LoggedInMixin):
     template_name = 'reports/compare.html'
 
     def get_context_data(self, **kwargs):
         pass
 
 
-class ReportCreateView(generic.TemplateView, LoginRequiredMixin):
+class ReportCreateView(generic.TemplateView, LoggedInMixin):
     template_name = "reports/create.html"
 
 
-class KeywordIndexView(generic.ListView, LoginRequiredMixin):
+class KeywordIndexView(generic.ListView, LoggedInMixin):
     template_name = 'reports/bykw.html'
     model = Keyword
     context_object_name = 'keyword_list'
