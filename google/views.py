@@ -15,11 +15,6 @@ class SiteIndexView(generic.ListView, LoggedInMixin):
     template_name = 'sites/list.html'
     context_object_name = 'site_list'
 
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
-            return HttpResponseForbidden()
-        return super(SiteIndexView, self).get(request, *args, **kwargs)
-
     def get_queryset(self):
         q = Site.objects.filter(admins=self.request.user)
         return q

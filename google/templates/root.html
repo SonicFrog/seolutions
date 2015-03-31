@@ -1,3 +1,4 @@
+{# -*- engine:django -*- #}
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,10 +6,12 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        {% block sidebar %}
+
         <div id="sidebar">
+            {% block sidebar %}
+            {% endblock %}
         </div>
-        {% endblock %}
+        
         <div id="content">
             {% block content %}{% endblock %}
         </div>

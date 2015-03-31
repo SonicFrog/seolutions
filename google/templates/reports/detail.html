@@ -1,19 +1,22 @@
+{# -*- engine:django -*- #}
 {% extends "root.html" %}
 
 {% block title %}Report n° {{ report.id }} details{% endblock %}
 
+{# This template is for viewing details for a report #}
+
 {% block content %}
-<p>
-    <h1>Report for {{ report.site }} with keyword
-        "{{ report.keyword }}"</h1>
-    <span class="report">
-        {% if report.page = -1 %}
-        {{ report.site.url }} was not found in the search results for
-        "{{ report.keyword }}" on {{ report.date }}
-        {% else %}
-        {{ report.site.url }} was ranked
-        {{ report.rank }} on page {{ report.page }} on {{ report.date }}
-        {% endif %}
-    </span>
-</p>
+    <p>
+        <h1>Report for {{ report.site }} with keyword
+            "{{ report.keyword }}"</h1>
+        <span class="report">
+            {% if report.page = -1 %}
+                {{ report.site.url }} was not found in the search results for
+                "{{ report.keyword }}" on {{ report.date }}
+            {% else %}
+                {{ report.site.url }} was ranked
+                {{ report.rank }} on page {{ report.page }} on {{ report.date }}
+            {% endif %}
+        </span>
+    </p>
 {% endblock %}
