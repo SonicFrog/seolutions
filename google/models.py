@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 
 
@@ -33,7 +32,7 @@ class Responsibility(models.Model):
     notify.short_description = "Notify person of reports?"
 
     def __str__(self):
-        return self.person.__str__()
+        return self.person
 
 
 class KeywordRelation(models.Model):
@@ -45,7 +44,7 @@ class KeywordRelation(models.Model):
     active.short_description = "Scrap for this keyword/site combination"
 
     def __str__(self):
-        return self.keyword.__str__()
+        return self.keyword
 
 
 class Report(models.Model):
@@ -56,4 +55,14 @@ class Report(models.Model):
     rank = models.IntegerField(default=-1)
 
     def __str__(self):
-        return "Ranking of " + self.site.__str__() + " on " + self.date.__str__()
+        return "Ranking of " + self.site + " on " + self.date
+
+
+class Campaign(object):
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    site = models.ForeignKey(Site)
+    keywords = models.ManyToManyField(Keyword)
+
+    def __str__(self):
+        return "Campaign for " + self.site + " for " ", ".join(self.keywords)
