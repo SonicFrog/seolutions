@@ -1,0 +1,36 @@
+{# -*- engine:django -*- #}
+{% extends "root.html" %}
+
+{% block title %}Report comparison{% endblock %}
+
+{% block content %}
+    {% if report_1 and report_2 %}
+        <table class="compare">
+            <tr class="header">
+                <td>Site</td>
+                <td>Page</td>
+                <td>Rank</td>
+                <td>Date</td>
+            </tr>
+            <tr class="report">
+                <td>{{ report_1.site }}</td>
+                <td>{{ report_1.page }}</td>
+                <td>{{ report_1.rank }}</td>
+                <td>{{ report_1.date }}</td>
+            </tr>
+            <tr class="report">
+                <td>{{ report_2.site }}</td>
+                <td>{{ report_2.page }}</td>
+                <td>{{ report_2.rank }}</td>
+                <td>{{ report_2.date }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p class="error">
+            There was an error processing the requested reports.
+            <a href="Go back" onclick="javascript:history.back(); return false;">
+                [Go back]
+            </a>
+        </p>
+    {% endif %}
+{% endblock %}
