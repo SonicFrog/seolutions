@@ -1,34 +1,32 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% include 'header.html' %}
-        <title>Details for {{ site.name }}</title>
-    </head>
-    <body>
-        <div id="site-display">
-            <h1>Details for {{ site.name }} ({{ site.url }})</h1>
-            <p>
-                <h2>Latest reports:</h2>
-                {% if report_list %}
+{# -*- engine:django -*- #}
+{% extends "root.html" %}
+
+{% block title %}Details for {{ site.name }}{% endblock %}
+
+{% block content %}
+    <div id="site-display">
+        <h1>Details for {{ site.name }} ({{ site.url }})</h1>
+        <p>
+            <h2>Latest reports:</h2>
+            {% if report_list %}
                 <ul>
                     {% for report in report_list %}
-                    <li>
-                        {% if report.rank = -1 %}
-                        <span class="rank">Not found</span> on {{ report.date }}
-                        for keyword <strong>{{ report.keyword }}</strong>.
-                        {% else  %}
-                        <span class="rank">Rank {{ report.rank }}</span>
-                        in <span class="rank">page {{ report.page }}</span>
-                        on {{ report.date }}
-                        for <span class="keyword">keyword {{ report.keyword }}</span>
-                        {% endif %}
-                    </li>
+                        <li>
+                            {% if report.rank = -1 %}
+                                <span class="rank">Not found</span> on {{ report.date }}
+                                for keyword <span class"keyword">{{ report.keyword }}</span>.
+                            {% else  %}
+                                <span class="rank">Rank {{ report.rank }}</span>
+                                in <span class="rank">page {{ report.page }}</span>
+                                on {{ report.date }}
+                                for <span class="keyword">keyword {{ report.keyword }}</span>.
+                            {% endif %}
+                        </li>
                     {% endfor %}
                 </ul>
-                {% else %}
+            {% else %}
                 No reports for this site
-                {% endif %}
-            </p>
-        </div>
-    </body>
-</html>
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}
